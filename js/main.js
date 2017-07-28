@@ -16,7 +16,6 @@ document.querySelector('.new-todo').addEventListener('keypress', (e) => {
             topic: 'todo.add',
             data: {
                 label: e.currentTarget.value,
-                complete: false
             }
         }, {
             channel: 'async',
@@ -160,17 +159,12 @@ function renderTodos(state) {
             document.querySelector("a[href='#/']").className = 'selected';
         }
         
-        input.addEventListener('click', (e) => {
-            // will need to reproduce state from the dom
-            // in order to properly toggle a todo
-            let liArray = Array.prototype.slice.call(document.querySelectorAll('.todo-list li'));
-
+        input.addEventListener('click', (e) => {           
             eventStore.add(eventStore.events, [{
                 channel: 'async',
                 topic: 'todo.toggle',
                 data: {
-                    idx: idx,
-                    complete: liArray[idx].className === 'completed' ? false : true
+                    idx: idx
                 }
             }]);
         });        
@@ -182,16 +176,11 @@ function renderTodos(state) {
         button.className = 'destroy';
 
         button.addEventListener('click', (e) => {
-            // will need to reproduce state from the dom
-            // in order to properly remove a todo
-            let liArray = Array.prototype.slice.call(document.querySelectorAll('.todo-list li'));
-
             eventStore.add(eventStore.events, [{
                 channel: 'async',
                 topic: 'todo.remove',
                 data: {
-                    idx: idx,
-                    wasComplete: liArray[idx].className === 'completed' ? true : false
+                    idx: idx
                 } 
             }]);
         });
