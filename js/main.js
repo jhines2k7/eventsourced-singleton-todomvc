@@ -11,7 +11,7 @@ document.querySelector('.new-todo').addEventListener('keypress', (e) => {
     let key = e.which || e.keyCode;
     
     if (key === 13) {
-        eventStore.add(eventStore.events, [{
+        eventStore.add([{
             channel: 'async',
             topic: 'todo.add',
             data: {
@@ -27,7 +27,7 @@ document.querySelector('.new-todo').addEventListener('keypress', (e) => {
 }, false);
 
 window.addEventListener("hashchange", (e) => {
-    eventStore.add(eventStore.events, [{
+    eventStore.add([{
         channel: 'async',
         topic: 'todo.filter',
         data: e.target.location.hash.substr(2)
@@ -35,7 +35,7 @@ window.addEventListener("hashchange", (e) => {
 }, false);
 
 document.querySelector('.clear-completed').addEventListener('click', (e) => {
-    eventStore.add(eventStore.events, [{
+    eventStore.add([{
         channel: 'async',
         topic: 'todo.clear.completed'
     }])
@@ -160,7 +160,7 @@ function renderTodos(state) {
         }
         
         input.addEventListener('click', (e) => {           
-            eventStore.add(eventStore.events, [{
+            eventStore.add([{
                 channel: 'async',
                 topic: 'todo.toggle',
                 data: {
@@ -176,7 +176,7 @@ function renderTodos(state) {
         button.className = 'destroy';
 
         button.addEventListener('click', (e) => {
-            eventStore.add(eventStore.events, [{
+            eventStore.add([{
                 channel: 'async',
                 topic: 'todo.remove',
                 data: {
